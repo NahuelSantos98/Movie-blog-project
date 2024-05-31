@@ -1,5 +1,3 @@
-/* formLogin.module.css */
-
 .containerForms {
     display: flex;
     flex-direction: column;
@@ -7,17 +5,17 @@
     gap: 2rem;
     padding: 2rem;
     background-color: #d2d2d2;
-    border-radius: 0.625rem; /* 10px */
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
-    max-width: 25rem; /* 400px */
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); 
+    max-width: 25rem; 
     margin: 0 auto;
 }
 
 .card {
     background: rgb(238, 237, 237);
     padding: 2rem;
-    border-radius: 0.625rem; /* 10px */
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 0 2px 4px */
+    border-radius: 0.625rem; 
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
     width: 90%;
 }
 
@@ -35,21 +33,21 @@
 
 .input {
     padding: 0.75rem;
-    border: 0.063rem solid #ddd; /* 1px */
-    border-radius: 0.313rem; /* 5px */
+    border: 0.063rem solid #ddd; 
+    border-radius: 0.313rem; 
     font-size: 1rem;
 }
 
 .input:focus {
     outline: none;
     border-color: #007BFF;
-    box-shadow: 0 0 0.188rem rgba(0, 123, 255, 0.25); /* 0 0 3px */
+    box-shadow: 0 0 0.188rem rgba(0, 123, 255, 0.25);
 }
 
 button {
     padding: 0.75rem;
     border: none;
-    border-radius: 0.313rem; /* 5px */
+    border-radius: 0.313rem;
     background-color: #007BFF;
     color: white;
     font-size: 1rem;
@@ -68,17 +66,16 @@ p {
     text-align: center;
 }
 
-@media (min-width: 48rem) { /* 768px */
+@media (min-width: 48rem) {
     .containerForms {
         flex-direction: row;
         justify-content: center;
-        align-items: stretch; /* Asegura que los hijos tengan la misma altura */
+        align-items: stretch; 
         max-width: 100%;
         gap: 2rem;
     }
-
     .card {
-        flex: 1; /* Permite que las tarjetas tengan la misma altura */
-        width: auto; /* Anula el ancho anterior */
+        flex: 1;
+        width: auto; 
     }
 }
