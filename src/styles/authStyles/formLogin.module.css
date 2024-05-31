@@ -6,7 +6,7 @@
     align-items: center;
     gap: 2rem;
     padding: 2rem;
-    background-color: #f9f9f9;
+    background-color: #d2d2d2;
     border-radius: 0.625rem; /* 10px */
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
     max-width: 25rem; /* 400px */
@@ -14,7 +14,7 @@
 }
 
 .card {
-    background: white;
+    background: rgb(238, 237, 237);
     padding: 2rem;
     border-radius: 0.625rem; /* 10px */
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 0 2px 4px */

@@ -354,13 +354,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(223, 222, 222) ;
+  background-color: rgb(0, 0, 0) ;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 h1{
   text-align: center;
 }

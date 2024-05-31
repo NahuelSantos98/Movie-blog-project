@@ -1,0 +1,27 @@
+.title{
+    color: white;
+}
+.subtitle{
+    text-align: center;
+    margin: 2rem;
+    color: white;
+}
+.imageContainer{
+    display: none;
+}
+@media (min-width:768px){
+    .imageContainer {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+    }
+    .chairs {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover; 
+    }
+}
