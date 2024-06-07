@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
-import style from '../../styles/authStyles/formLogin.module.css' 
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import style from '../../styles/authStyles/formLogin.module.css';
 
 const FormLogin = () => {
+    const navigate = useNavigate();
+    const auth = useAuth();
 
-    const auth = useAuth()  
-    const {email} = auth.user 
+    const [emailRegister, setEmailRegister] = useState('');
+    const [passwordRegister, setPasswordRegister] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [error, setError] = useState(null);
 
-    const [emailRegister, setEmailRegister] = useState('')
-    const [passwordRegister, setPasswordRegister] = useState('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [error, setError] = useState(null)
-
-    const [emailLogin, setEmailLogin] = useState('')
-    const [passwordLogin, setPasswordLogin] = useState('')
-    const [errorLogin, setErrorLogin] = useState(null)
+    const [emailLogin, setEmailLogin] = useState('');
+    const [passwordLogin, setPasswordLogin] = useState('');
+    const [errorLogin, setErrorLogin] = useState(null);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -33,8 +32,12 @@ const FormLogin = () => {
             setError('The format of the Email is incorrect.');
         } else {
             try {
-                await auth.register(emailRegister, passwordRegister);
-                setError('');
+                const result = await auth.register(emailRegister, passwordRegister);
+                if (result.success) {
+                    navigate('/home');
+                } else {
+                    throw result.error;
+                }
             } catch (error) {
                 if (error.code === 'auth/email-already-in-use') {
                     setError('The email you provided is already in use.');
@@ -44,44 +47,46 @@ const FormLogin = () => {
             }
         }
     };
-    
+
     const handleLogIn = async (e) => {
         e.preventDefault();
         setErrorLogin('');
-        const response = await auth.login(emailLogin, passwordLogin);
-        if (!response.success) {
-            setErrorLogin(response.message);
+
+        try {
+            const result = await auth.login(emailLogin, passwordLogin);
+            if (result.success) {
+                navigate('/home');
+            } else {
+                setErrorLogin(result.message);
+            }
+        } catch (error) {
+            setErrorLogin('Invalid email or password.');
         }
     };
 
-    const handleLogOut = ()=>{
-        auth.logOut()
-    }
-
-return (
-    <div className={style.containerForms}>
-        <div className={style.card}>
-            <h3 className={style.h3}>Register</h3>
-            <form className={style.form}>
-                <input className={style.input} onChange={(e)=>setEmailRegister(e.target.value)} type='email' placeholder='Email'  required/>
-                <input className={style.input} onChange={(e)=> setPasswordRegister(e.target.value)} type='password' placeholder='Password'  required/>
-                <input className={style.input} onChange={(e)=>setPasswordConfirmation(e.target.value)} type='password' placeholder='Confirm password' required />
-                {error && <p style={{color: 'red', textDecoration: 'underline'}}>{error}</p>}
-                <button onClick={(e)=>handleRegister(e)}>Create Account</button>
-            </form>
+    return (
+        <div className={style.containerForms}>
+            <div className={style.card}>
+                <h3 className={style.h3}>Register</h3>
+                <form className={style.form}>
+                    <input className={style.input} onChange={(e) => setEmailRegister(e.target.value)} type='email' placeholder='Email' required />
+                    <input className={style.input} onChange={(e) => setPasswordRegister(e.target.value)} type='password' placeholder='Password' required />
+                    <input className={style.input} onChange={(e) => setPasswordConfirmation(e.target.value)} type='password' placeholder='Confirm password' required />
+                    {error && <p className={style.textError}>{error}</p>}
+                    <button className={style.buttonLogin} onClick={(e) => handleRegister(e)}>Create Account</button>
+                </form>
+            </div>
+            <div className={style.card}>
+                <h3 className={style.h3}>Log In</h3>
+                <form className={style.form}>
+                    <input className={style.input} onChange={(e) => setEmailLogin(e.target.value)} type='email' placeholder='Email' required />
+                    <input className={style.input} onChange={(e) => setPasswordLogin(e.target.value)} type='password' placeholder='Password' required />
+                    {errorLogin && <p className={style.textError}>{errorLogin}</p>}
+                    <button className={style.buttonLogin} onClick={e => handleLogIn(e)}>Log In</button>
+                </form>
+            </div>
         </div>
-        <div className={style.card}>
-            <h3 className={style.h3}>Log In</h3>
-            <form className={style.form}>
-                <input className={style.input} onChange={(e)=>setEmailLogin(e.target.value)} type='email' placeholder='Email'  required/>
-                <input className={style.input} onChange={(e)=>setPasswordLogin(e.target.value)} type='password' placeholder='Password'  required/>
-                {errorLogin && <p style={{color: 'red', textDecoration: 'underline'}}>{errorLogin}</p>}
-                <button onClick={e=>handleLogIn(e)}>Log In</button>
-            </form>
-        </div>
-        {email && <button onClick={()=>handleLogOut()}>Log out</button>}
-    </div>
-)
+    );
 }
 
-export default FormLogin
+export default FormLogin;
