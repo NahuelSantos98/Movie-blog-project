@@ -12,7 +12,9 @@
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
-
+*{
+  color: white;
+}
 /* Sections
    ========================================================================== */
 
@@ -364,4 +366,9 @@ code {
 
 h1{
   text-align: center;
+}
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
 }

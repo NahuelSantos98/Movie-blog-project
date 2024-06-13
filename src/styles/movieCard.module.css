@@ -1,0 +1,39 @@
+.movieCardStyle {
+    background-color: #333;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .movieCardTitle {
+    color: white;
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+  }
+  
+  .movieCardPoster {
+    width: 15rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .movieListStyle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+.movieCardButton{
+    color: black;
+}
+  @media (min-width: 768px) {
+    .movieListStyle {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
