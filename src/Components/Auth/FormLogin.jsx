@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import style from '../../styles/authStyles/formLogin.module.css';
@@ -16,14 +16,22 @@ const FormLogin = () => {
     const [passwordLogin, setPasswordLogin] = useState('');
     const [errorLogin, setErrorLogin] = useState(null);
 
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            setEmailLogin(user.email);
+            navigate('/home'); 
+        }
+    }, [navigate]);
+
     const handleRegister = async (e) => {
         e.preventDefault();
-    
         const validateEmail = (email) => {
             const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
             return regex.test(email);
         };
-    
+
         if (passwordConfirmation.length <= 6 || passwordRegister.length <= 6) {
             setError('Password must have at least 7 characters.');
         } else if (passwordConfirmation !== passwordRegister) {
@@ -51,7 +59,6 @@ const FormLogin = () => {
     const handleLogIn = async (e) => {
         e.preventDefault();
         setErrorLogin('');
-
         try {
             const result = await auth.login(emailLogin, passwordLogin);
             if (result.success) {
@@ -69,20 +76,52 @@ const FormLogin = () => {
             <div className={style.card}>
                 <h3 className={style.h3}>Register</h3>
                 <form className={style.form}>
-                    <input className={style.input} onChange={(e) => setEmailRegister(e.target.value)} type='email' placeholder='Email' required />
-                    <input className={style.input} onChange={(e) => setPasswordRegister(e.target.value)} type='password' placeholder='Password' required />
-                    <input className={style.input} onChange={(e) => setPasswordConfirmation(e.target.value)} type='password' placeholder='Confirm password' required />
+                    <input 
+                        className={style.input} 
+                        onChange={(e) => setEmailRegister(e.target.value)} 
+                        type='email' 
+                        placeholder='Email' 
+                        required 
+                    />
+                    <input 
+                        className={style.input} 
+                        onChange={(e) => setPasswordRegister(e.target.value)} 
+                        type='password' 
+                        placeholder='Password' 
+                        required 
+                    />
+                    <input 
+                        className={style.input} 
+                        onChange={(e) => setPasswordConfirmation(e.target.value)} 
+                        type='password' 
+                        placeholder='Confirm password' 
+                        required 
+                    />
                     {error && <p className={style.textError}>{error}</p>}
-                    <button className={style.buttonLogin} onClick={(e) => handleRegister(e)}>Create Account</button>
+                    <button className={style.buttonLogin} onClick={handleRegister}>Create Account</button>
                 </form>
             </div>
             <div className={style.card}>
                 <h3 className={style.h3}>Log In</h3>
                 <form className={style.form}>
-                    <input className={style.input} onChange={(e) => setEmailLogin(e.target.value)} type='email' placeholder='Email' required />
-                    <input className={style.input} onChange={(e) => setPasswordLogin(e.target.value)} type='password' placeholder='Password' required />
+                    <input 
+                        className={style.input} 
+                        onChange={(e) => setEmailLogin(e.target.value)} 
+                        value={emailLogin} 
+                        type='email' 
+                        placeholder='Email' 
+                        required 
+                    />
+                    <input 
+                        className={style.input} 
+                        onChange={(e) => setPasswordLogin(e.target.value)} 
+                        value={passwordLogin} 
+                        type='password' 
+                        placeholder='Password' 
+                        required 
+                    />
                     {errorLogin && <p className={style.textError}>{errorLogin}</p>}
-                    <button className={style.buttonLogin} onClick={e => handleLogIn(e)}>Log In</button>
+                    <button className={style.buttonLogin} onClick={handleLogIn}>Log In</button>
                 </form>
             </div>
         </div>

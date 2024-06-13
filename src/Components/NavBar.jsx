@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import style from '../styles/navBar.module.css';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     const { user, logOut } = useAuth();
@@ -18,8 +19,9 @@ const NavBar = () => {
                     </div>
             </>
             ) : (
-                <div>
-                    <span>You are not logged in.</span>
+                <div style={{textAlign: 'center', padding: '3rem'}}>
+                    <span>To have acces to all our services, you must be logged in</span>
+                    <Link to='/'><button>Log In</button></Link>
                 </div>
             )}
         </div>

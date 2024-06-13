@@ -1,43 +1,47 @@
 import { auth } from "../services/firebaseConfig";
-import { useContext, createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 export const authContext = createContext();
 
 export const useAuth = () => {
     const contextAuthorization = useContext(authContext);
-    
     if (!contextAuthorization) {
         console.log("Error creating auth context");
     }
-
     return contextAuthorization;
 }
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [navigateConfirmation, setConfirmNavigateConfirmation] = useState(false);
 
     useEffect(() => {
-        const subscribed = onAuthStateChanged(auth, (currentUser) => {
-            if (!currentUser) {
-                setUser(null);
-            } else {
-                setUser(currentUser);
-            }
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser ? currentUser : null);
         });
-        return () => subscribed();
+        return () => unsubscribe();
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+        } else {
+            localStorage.removeItem("user");
+        }
+    }, [user]);
 
     const register = async (email, password) => {
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             console.log("register: ", response);
-            setConfirmNavigateConfirmation(true);
-            return { success: true }; // Return success status
+            return { success: true };
         } catch (error) {
             console.log(error);
-            setConfirmNavigateConfirmation(false);
             return { success: false, error };
         }
     };
@@ -46,27 +50,25 @@ const AuthProvider = ({ children }) => {
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
             console.log("login: ", response);
-            setConfirmNavigateConfirmation(true);
-            return { success: true }; // Return success status
+            return { success: true };
         } catch (error) {
             console.log(error);
-            setConfirmNavigateConfirmation(false);
             return { success: false, message: 'The password or email that you provided is incorrect. Try again' };
         }
     };
 
     const logOut = async () => {
         try {
-            const response = await signOut(auth);
+            await signOut(auth);
             setUser(null);
-            console.log("logOut:", response);
+            console.log("logOut: success");
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <authContext.Provider value={{ register, login, logOut, navigateConfirmation, user }}>
+        <authContext.Provider value={{ register, login, logOut, user }}>
             {children}
         </authContext.Provider>
     );

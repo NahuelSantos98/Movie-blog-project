@@ -367,6 +367,9 @@ code {
 h1{
   text-align: center;
 }
+input{
+  color: black;
+}
 *{
   margin:0;
   padding:0;
