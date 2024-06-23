@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useContext} from 'react'
 import MoviesList from './MoviesList'
+import { DataContext } from '../context/MovieContext'
 
 const MovieListContainer = () => {
-    const url = `${import.meta.env.VITE_BASE_API}${import.meta.env.VITE_API_MOVIE_URL}${import.meta.env.VITE_API_KEY_MOVIE}`
-    const [moviesList, setMoviesList] = useState([])
 
-    useEffect(() => {
-        axios(url)
-            .then((res) => {
-                if (res.data) {
-                    console.log(res.data)
-                    setMoviesList(res.data.results)
-                } else {
-                    console.log('No content in response:', res)
-                }
-            })
-            .catch((err) => {
-                console.error('Error:', err)
-            })
-    }, [url]) 
+    const {state} = useContext(DataContext)
 
     return (
         <div>
-            <MoviesList moviesList={moviesList} />
+            <MoviesList moviesList={state.data} />
         </div>
     )
 }

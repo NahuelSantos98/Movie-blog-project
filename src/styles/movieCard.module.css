@@ -29,6 +29,7 @@
   }
 .movieCardButton{
     color: black;
+    margin-top:1rem;
 }
   @media (min-width: 768px) {
     .movieListStyle {

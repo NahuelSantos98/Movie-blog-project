@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import style from '../../styles/authStyles/formLogin.module.css';
+import routes from '../../services/routes';
 
 const FormLogin = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const FormLogin = () => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
             setEmailLogin(user.email);
-            navigate('/home'); 
+            navigate(`${routes.home}`); 
         }
     }, [navigate]);
 
@@ -42,7 +43,7 @@ const FormLogin = () => {
             try {
                 const result = await auth.register(emailRegister, passwordRegister);
                 if (result.success) {
-                    navigate('/home');
+                    navigate(`${routes.home}`);
                 } else {
                     throw result.error;
                 }
@@ -62,7 +63,7 @@ const FormLogin = () => {
         try {
             const result = await auth.login(emailLogin, passwordLogin);
             if (result.success) {
-                navigate('/home');
+                navigate(`${routes.home}`);
             } else {
                 setErrorLogin(result.message);
             }
