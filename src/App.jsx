@@ -17,10 +17,9 @@ function App() {
             <Route path={routes.login} element={<LoginPage />} />
             <Route element={<Layout />}>
               <Route path={routes.home} element={<HomePage />} />
-              {/* <Route path={routes.prueba} element={<MovieListContainer />} /> */}
               <Route path={routes.details + '/:id'} element={<DetailMovie />} />
             </Route>
-            <Route path={routes.error} element={<h1 style={{color: 'red', fontSize: '7rem'}}>404 Not Found</h1>} />
+            <Route path='*' element={<h1 style={{color: 'red', fontSize: '7rem'}}>404 Not Found</h1>} />
           </Routes>
         </BrowserRouter>
       </DataContextProvider>
@@ -29,3 +28,4 @@ function App() {
 }
 
 export default App;
+
