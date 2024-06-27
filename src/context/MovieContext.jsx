@@ -78,7 +78,7 @@ export const DataContextProvider = ({ children }) => {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZTc3NmEzYWMyYjY2YmJiNjFhM2Y0ZWQxOTNlMzMxNCIsInN1YiI6IjY2NTY5MThiOThkMjYzOTc4MTRmN2Q2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xXcEzfrysjc4Sls0EqIwKpZEez_A_aadgCN7xRQU1Bg'
+        'Authorization': `Bearer ${import.meta.env.VITE_API_BEARER}`
       }
     };
   
