@@ -31,6 +31,9 @@
     color: black;
     margin-top:1rem;
 }
+.releaseDateCard{
+  margin-top: .4rem;
+}
   @media (min-width: 768px) {
     .movieListStyle {
       flex-direction: row;

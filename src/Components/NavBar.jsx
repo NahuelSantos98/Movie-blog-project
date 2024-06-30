@@ -8,18 +8,22 @@ import { DataContext } from '../context/MovieContext';
 const NavBar = () => {
   const [searchedMovie, setSearchedMovie] = useState('');
   const { user, logOut } = useAuth();
-  const { searchMovie, errorMoviesSearched } = useContext(DataContext);
+  const { searchMovie, errorMoviesSearched, setPage } = useContext(DataContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     searchMovie(searchedMovie);
   };
 
+  const handleHome = ()=>{
+    setPage(1)
+  }
+
   return (
     <div className={style.navBar}>
       {user ? (
         <div className={style.navBarAcces}>
-        <Link to={routes.home}><h2 className={style.navBarTitle}>Welcome</h2></Link>
+        <Link to={routes.home}><h2 onClick={handleHome} className={style.navBarTitle}>Welcome</h2></Link>
           <div className={style.searchAndLogOut}>
             <form onSubmit={handleSubmit} className={style.formSearch}>
               <input type='text' placeholder='Search' value={searchedMovie} onChange={e => setSearchedMovie(e.target.value)} />

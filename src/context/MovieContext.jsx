@@ -1,18 +1,20 @@
 import axios from 'axios';
 import { createContext, useEffect, useReducer, useState } from 'react';
 
-export const initialState = { data: [], genres: [], searchMovie: [], bannerData: [] };
+export const initialState = { data: [], searchMovie: [], bannerData: [], detailMovie: [], detailVideo: [] };
 
 function reducer(state, action) {
   switch (action.type) {
     case 'SET_DATA':
       return { ...state, data: action.payload };
-    case 'SET_GENRES':
-      return { ...state, genres: action.payload };
     case 'SEARCH_MOVIES':
       return { ...state, searchMovie: action.payload };
     case 'SET_DATA_BANNER':
       return {...state, bannerData: action.payload }
+    case 'DETAIL_MOVIE':
+      return {...state, detailMovie: action.payload }
+    case 'DETAIL_MOVIE_VIDEO':
+      return {...state, detailVideo: action.payload}
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -25,10 +27,8 @@ export const DataContextProvider = ({ children }) => {
   const [errorMoviesSearched, setErrorMoviesSearched] = useState(false)
 
   const urlGetMovies = `${import.meta.env.VITE_BASE_API}/movie/now_playing?${import.meta.env.VITE_API_KEY_MOVIE}&language=en-US&page=${page}`;
-  const urlGetGenres = `${import.meta.env.VITE_BASE_API}/genre/movie/list?${import.meta.env.VITE_API_KEY_MOVIE}&language=en-US`;
   const urlPage2 =`${import.meta.env.VITE_BASE_API}/movie/now_playing?${import.meta.env.VITE_API_KEY_MOVIE}&language=en-US&page=2`;
-
-
+  
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -45,20 +45,6 @@ export const DataContextProvider = ({ children }) => {
       });
   }, [urlGetMovies, page]);
 
-  useEffect(() => {
-    axios.get(urlGetGenres)
-      .then((res) => {
-        if (res.data.genres) {
-          dispatch({ type: 'SET_GENRES', payload: res.data.genres });
-        } else {
-          console.log('Unexpected response structure:', res);
-        }
-      })
-      .catch((err) => {
-        console.error('Error fetching genres:', err);
-      });
-  }, [urlGetGenres]);
-
   useEffect(()=>{
     axios.get(urlPage2)
     .then(res=> {
@@ -71,6 +57,26 @@ export const DataContextProvider = ({ children }) => {
     .catch(err=> console.log(err))
   }, [urlPage2])
 
+  const getDetail = (id) => {
+    const urlDetail = `${import.meta.env.VITE_BASE_API}/movie/${id}?${import.meta.env.VITE_API_KEY_MOVIE}&language=en-US`;
+    const urlVideo = `${import.meta.env.VITE_BASE_API}/movie/${id}/videos?${import.meta.env.VITE_API_KEY_MOVIE}&language=en-US`
+    const options = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_API_BEARER}`
+      }
+    };
+  
+    axios.get(urlDetail, options)
+      .then(res => dispatch({ type: 'DETAIL_MOVIE', payload: res.data }))
+      .catch(err => console.log(err));
+
+      axios.get(urlVideo)
+      .then(res => dispatch({ type: 'DETAIL_MOVIE_VIDEO', payload: res.data.results }))
+      .catch(err => console.log(err));
+  };
+  
   const searchMovie = (valueMovie) => {
     const urlSearch = `${import.meta.env.VITE_BASE_API}/search/movie?&query=${valueMovie}`;
   
@@ -99,15 +105,8 @@ export const DataContextProvider = ({ children }) => {
     setPage(prevPage => (prevPage > 1 ? prevPage - 1 : 1));
   };
 
-  const getGenre = (genreIds) => {
-    return genreIds.map(id => {
-      const genre = state.genres.find(g => g.id === id);
-      return genre ? genre.name : '';
-    });
-  };
-
   return (
-    <DataContext.Provider value={{ state, page, errorMoviesSearched, dispatch, getGenre, handlePageNext, handlePagePrev, searchMovie }}>
+    <DataContext.Provider value={{ state, page,setPage, errorMoviesSearched, getDetail, dispatch, handlePageNext, handlePagePrev, searchMovie }}>
       {children}
     </DataContext.Provider>
   );

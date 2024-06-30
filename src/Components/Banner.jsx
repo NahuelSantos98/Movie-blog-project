@@ -23,9 +23,11 @@ const Banner = () => {
 
     return (
         <section className={style.banner} aria-label="Banner">
+            <Link to={`${routes.details}/${currentBanner.id}`} className={style.link}>
             <div className={style.bannerBackdrop}>
                 <img className={style.imgBanner} src={`https://image.tmdb.org/t/p/w500${currentBanner.backdrop_path}`} alt={currentBanner.title} />
             </div>
+            </Link>
             <div className={style.bannerContent}>
                 <Link to={`${routes.details}/${currentBanner.id}`} className={style.link}>
                 <h2 className={style.bannerTitle}>{currentBanner.title}</h2>

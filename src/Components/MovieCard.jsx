@@ -23,7 +23,7 @@ const MovieCard = ({ movie, showButton }) => {
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={`Poster for the Movie: ${movie.title}`}
       /> : <img src={NoPoster} alt={`There is not a poster for ${movie.title} `} style={{width: '15rem', height: '22.3rem', borderRadius: '.3rem' }} /> }
-
+      <p className={style.releaseDateCard}>Release Date: {movie.release_date}</p>
       {showButton && <Link to={routes.details + `/${movie.id}`}><button className={style.movieCardButton}>See More</button></Link>}
     </div>
   );
