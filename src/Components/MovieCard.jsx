@@ -4,7 +4,7 @@ import routes from '../services/routes';
 import { Link } from 'react-router-dom';
 import NoPoster from '../assets/img/There Is no poster.png'
 
-const MovieCard = ({ movie, showButton }) => {
+const MovieCard = ({ movie }) => {
 
   const handleTitle = () => {
     let titleWithoutSpaces = movie.title.trim();
@@ -24,7 +24,7 @@ const MovieCard = ({ movie, showButton }) => {
         alt={`Poster for the Movie: ${movie.title}`}
       /> : <img src={NoPoster} alt={`There is not a poster for ${movie.title} `} style={{width: '15rem', height: '22.3rem', borderRadius: '.3rem' }} /> }
       <p className={style.releaseDateCard}>Release Date: {movie.release_date}</p>
-      {showButton && <Link to={routes.details + `/${movie.id}`}><button className={style.movieCardButton}>See More</button></Link>}
+      <Link to={routes.details + `/${movie.id}`}><button className={style.movieCardButton}>See More</button></Link>
     </div>
   );
 };

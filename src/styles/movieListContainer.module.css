@@ -1,0 +1,5 @@
+.containerMovieList{
+    background-image: url(../assets/img/BackgroundImage.png);
+    background-size: contain;
+    background-repeat: repeat-y;
+}

@@ -1,10 +1,11 @@
 import React from 'react'
 import Home from '../Components/Home'
 import Banner from '../Components/Banner'
+import style from '../styles/homePage.module.css'
 
 const HomePage = () => {
   return (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    <div className={style.homeContainer}>
         <Banner/>
         <Home />
     </div>

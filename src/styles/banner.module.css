@@ -7,6 +7,12 @@
     background-color: rgba(147, 74, 37, 0.5);
     border-radius: 1rem;
     margin-top: 1rem;
+    border: solid 1.5px black;
+}
+.banner:hover {
+    border-bottom: solid white 1.5px;
+    border-left:solid white 1.5px ;
+    transition: border-color 0.5s ease;
 }
 .bannerBackdrop {
     flex: 1;

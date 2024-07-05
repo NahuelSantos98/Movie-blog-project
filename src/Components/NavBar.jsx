@@ -26,7 +26,7 @@ const NavBar = () => {
         <Link to={routes.home}><h2 onClick={handleHome} className={style.navBarTitle}>Welcome</h2></Link>
           <div className={style.searchAndLogOut}>
             <form onSubmit={handleSubmit} className={style.formSearch}>
-              <input type='text' placeholder='Search' value={searchedMovie} onChange={e => setSearchedMovie(e.target.value)} />
+              <input type='text'  className={style.searchInput} placeholder='Search' value={searchedMovie} onChange={e => setSearchedMovie(e.target.value)} />
               <button type="submit" className={style.searchSubmitButton}>Search</button>
               {errorMoviesSearched && <p>We cannot found a movie with this title</p>}
             </form>

@@ -7,9 +7,21 @@
     z-index: 1000;
 }
 .buttonLogInNavBar, .buttonLogOut{
-    padding: 0.5rem;
+    padding: 0.3rem;
     background-color: rgb(109, 15, 15);
     color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.buttonLogInNavBar:hover, .buttonLogOut:hover{
+    background-color:rgb(234, 190, 63);
+    transition: background-color 0.3s ease;
+}
+.buttonLogOut{
+    border-radius: .2rem;
+}
+.searchInput{
+    padding: 0.5rem;
     border-radius: 1rem;
 }
 .formSearch{
@@ -18,9 +30,14 @@
     align-items: center;
 }
 .searchSubmitButton{
-    background-color: rgb(218, 125, 125);
-    border-radius: .2rem;
-    padding: .1rem;
+    background-color: rgb(155, 57, 34);
+    border-radius: 1rem;
+    padding: .3rem;
+    cursor: pointer;
+}
+.searchSubmitButton:hover{
+    border: solid white 2px;
+    transition: border-color 0.5s ease;
 }
 .navBarAcces{
     display: flex;
