@@ -2,8 +2,10 @@ import { auth } from "../services/firebaseConfig";
 import { createContext, useState, useEffect, useContext } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
+// Crear el contexto
 export const authContext = createContext();
 
+// Hook para usar el contexto
 export const useAuth = () => {
     const contextAuthorization = useContext(authContext);
     if (!contextAuthorization) {
@@ -12,6 +14,7 @@ export const useAuth = () => {
     return contextAuthorization;
 }
 
+// Proveedor de autenticación
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 

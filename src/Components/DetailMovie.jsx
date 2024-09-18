@@ -17,7 +17,7 @@ const DetailMovie = () => {
 
   useEffect(() => {
     getDetail(id);
-  }, [id]);
+  }, [id, getDetail]);
 
   useEffect(() => {
     if (state.detailVideo) {
